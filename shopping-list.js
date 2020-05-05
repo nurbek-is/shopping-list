@@ -10,7 +10,7 @@ function log(msg) {
 /* Remove item from list */
 function removeFromList(e) {
 const item = e.currentTarget.parentNode;
-item.remove();s
+item.remove();
   log(item.title + 'was Removed');
 }
 
@@ -23,13 +23,8 @@ function addToList(product) {
   log(product + ' added.'); 
   activelist.appendChild(newItem); 
 }
-  
-  
-
 function init() {
   log('Page Loaded');
-  addToList()
-
   const btnListAdd=document.getElementsByClassName('btn-add');
     const btnAddNewItem=document.getElementById('add-new-item');
     const newItem = document.getElementById("new-item");
@@ -46,7 +41,14 @@ function init() {
      btnAddNewItem.addEventListener('click',function() {
        addToList(newItem.value)
        newTextVal='';
+       newItem.focus();
      })
+  newItem.addEventListener('keypress',function(e) {
+    if(e.key==='Enter') {
+      addToList(newItem.value);
+      newTextVal='';
+      newItem.focus();
+    }
+  })
 }
-
 window.addEventListener("load", init);
