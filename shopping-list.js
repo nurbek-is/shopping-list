@@ -11,21 +11,40 @@ function log(msg) {
 function removeFromList(e) {
 const item = e.currentTarget.parentNode;
 item.remove();
-  log(item.title + 'was Removed');
+log(item.title +  ' was Removed');
+let selector= '#common-items-list>li>button[name="' + item.title + '"]';
+  const btnMatch= document.querySelector(selector);
+ if (btnMatch)
+  btnMatch.disabled=false;
 }
 
 /* Add product to list */
 function addToList(product) { 
+  product=product.trim();
   const activelist=document.getElementById('active-items-list');
   const newItem= document.createElement('li');
   newItem.title = product;
-  newItem.innerHTML = product + ' ';
-  log(product + ' added.'); 
+  newItem.innerHTML = product + '';
   activelist.appendChild(newItem); 
+  log(product + ' added.'); 
+  const button= document.createElement('button');
+  button.innerHTML="-";
+  newItem.appendChild(button); 
+  button.addEventListener('click',removeFromList);
+  // Check if list item being added is in common list items
+  // If it is, we need to disable its button there.
+  let selector= '#common-items-list>li>button[name="' + product + '"]';
+  const btnMatch= document.querySelector(selector);
+      if(btnMatch){
+      btnMatch.disabled=true;
+    }
 }
+
+
 function init() {
   log('Page Loaded');
   const btnListAdd=document.getElementsByClassName('btn-add');
+  
     const btnAddNewItem=document.getElementById('add-new-item');
     const newItem = document.getElementById("new-item");
     newItem.focus()
@@ -35,6 +54,7 @@ function init() {
         const product=button.name;
         addToList(product);
         newItem.focus();
+     
       })
     } 
      /* Add event listener to New Item Add button */
