@@ -7,6 +7,7 @@ function log(msg) {
    log.appendChild(newItem)
 }
 
+
 /* Remove item from list */
 function removeFromList(e) {
 const item = e.currentTarget.parentNode;
@@ -17,12 +18,20 @@ let selector= '#common-items-list>li>button[name="' + item.title + '"]';
  if (btnMatch)
   btnMatch.disabled=false;
 }
-
 /* Add product to list */
 function addToList(product) { 
   product=product.trim();
+  // Check if list item is already in active list
+  //  or if product is empty string.
+  const selector2='#active-items-list>li[title="' + product + '"]';
+  const liMatch=document.querySelector('#active-items-list>li[title="' + product + '"]')
+  console.log(liMatch==='true')
+  if (liMatch||!product.length)  {
+    return false
+  }
   const activelist=document.getElementById('active-items-list');
-  const newItem= document.createElement('li');
+  let newItem= document.createElement('li');
+  newItem= document.createElement('li');
   newItem.title = product;
   newItem.innerHTML = product + '';
   activelist.appendChild(newItem); 
@@ -39,12 +48,9 @@ function addToList(product) {
       btnMatch.disabled=true;
     }
 }
-
-
 function init() {
   log('Page Loaded');
   const btnListAdd=document.getElementsByClassName('btn-add');
-  
     const btnAddNewItem=document.getElementById('add-new-item');
     const newItem = document.getElementById("new-item");
     newItem.focus()
@@ -54,7 +60,6 @@ function init() {
         const product=button.name;
         addToList(product);
         newItem.focus();
-     
       })
     } 
      /* Add event listener to New Item Add button */
