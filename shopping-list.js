@@ -6,8 +6,6 @@ function log(msg) {
   newItem.innerHTML = now.toLocaleTimeString() + '<em> '+ msg +' </em>'
    log.appendChild(newItem)
 }
-
-
 /* Remove item from list */
 function removeFromList(e) {
 const item = e.currentTarget.parentNode;
@@ -23,9 +21,8 @@ function addToList(product) {
   product=product.trim();
   // Check if list item is already in active list
   //  or if product is empty string.
-  const selector2='#active-items-list>li[title="' + product + '"]';
-  const liMatch=document.querySelector('#active-items-list>li[title="' + product + '"]')
-  console.log(liMatch==='true')
+  let selector='#active-items-list>li[title="' + product + '"]';
+  const liMatch=document.querySelector(selector)
   if (liMatch||!product.length)  {
     return false
   }
@@ -42,7 +39,7 @@ function addToList(product) {
   button.addEventListener('click',removeFromList);
   // Check if list item being added is in common list items
   // If it is, we need to disable its button there.
-  let selector= '#common-items-list>li>button[name="' + product + '"]';
+  selector= '#common-items-list>li>button[name="' + product + '"]';
   const btnMatch= document.querySelector(selector);
       if(btnMatch){
       btnMatch.disabled=true;
